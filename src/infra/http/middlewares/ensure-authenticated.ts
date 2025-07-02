@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 
 import { authConfig } from "@/configs/auth";
-import { AppError } from "@/utils/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
 interface TokenPayload {
   role: string;
@@ -14,8 +14,11 @@ function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ) {
+  console.log("🔐 Entrou no ensureAuthenticated");
+
   try {
     const authHeader = request.headers.authorization;
+    console.log("Auth Header:", authHeader);
 
     if (!authHeader) {
       throw new AppError("JWT token not found", 401);
@@ -35,7 +38,7 @@ function ensureAuthenticated(
 
     return next();
   } catch (error) {
-    throw new AppError("Invalid JSWT token", 401);
+    throw new AppError("Invalid JWT token", 401);
   }
 }
 
