@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { createDeliveryLogSchema } from "../dtos/create-delivery-log.dto";
 import { showDeliveryLogsSchema } from "../dtos/show-delivery-logs.dto";
 
-
 class DeliveryLogsController {
   async create(request: Request, response: Response) {
     const data = createDeliveryLogSchema.parse(request.body);

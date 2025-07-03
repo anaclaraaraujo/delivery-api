@@ -41,7 +41,7 @@ model Delivery {
 
   status DeliveryStatus @default(processing)
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs DeliveryLog[]
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -55,7 +55,7 @@ model DeliveryLog {
   description String
   deliveryId String @map("delivery_id")
 
-  delivery Delivery @relation(fields: [deliveryId], references: [id])
+  delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @map("updated_at")

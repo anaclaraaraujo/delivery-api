@@ -14,11 +14,8 @@ function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ) {
-  console.log("🔐 Entrou no ensureAuthenticated");
-
   try {
     const authHeader = request.headers.authorization;
-    console.log("Auth Header:", authHeader);
 
     if (!authHeader) {
       throw new AppError("JWT token not found", 401);
