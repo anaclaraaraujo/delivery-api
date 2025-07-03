@@ -40,6 +40,8 @@ services:
     build:
       context: .
       target: test
+    volumes:
+      - ./:/app
     container_name: delivery-api-test
     environment:
       - NODE_ENV=test
