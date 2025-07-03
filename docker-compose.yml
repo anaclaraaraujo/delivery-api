@@ -24,5 +24,32 @@ services:
     volumes:
       - delivery_pgdata:/bitnami/postgresql
 
+  postgres-test:
+    image: "bitnami/postgresql:latest"
+    container_name: delivery-db-test
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRESQL_USERNAME: postgres
+      POSTGRESQL_PASSWORD: postgres
+      POSTGRESQL_DATABASE: delivery-api-test
+    volumes:
+      - delivery_pgdata_test:/bitnami/postgresql
+
+  test:
+    build:
+      context: .
+      target: test
+    container_name: delivery-api-test
+    environment:
+      - NODE_ENV=test
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-test:5432/delivery-api-test?schema=public
+      - DATABASE_URL_TEST=postgresql://postgres:postgres@postgres-test:5432/delivery-api-test?schema=public
+      - JWT_SECRET=8b0b678e42d739c097721826c13d6f2d
+    depends_on:
+      - postgres-test
+    command: ["npm", "run", "test:dev"]
+
 volumes:
   delivery_pgdata:
+  delivery_pgdata_test:
