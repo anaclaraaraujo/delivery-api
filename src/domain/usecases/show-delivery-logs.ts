@@ -1,6 +1,6 @@
 import { AppError } from "@/shared/errors/AppError";
 import { DeliveriesRepository } from "@/domain/repositories/deliveries-repository";
-import type { ShowDeliveryLogsDTO } from "@/infra/http/dtos/show-delivery-logs.dto";
+import { ShowDeliveryLogsDTO } from "@/infra/http/dtos/show-delivery-logs.dto";
 
 export class ShowDeliveryLogsService {
   private deliveriesRepo = new DeliveriesRepository();
@@ -12,7 +12,11 @@ export class ShowDeliveryLogsService {
       delivery_id
     );
 
-    if (user?.role === "customer" && user.id !== delivery?.userId) {
+    if (!delivery) {
+      throw new AppError("Delivery not found", 404);
+    }
+
+    if (user?.role === "customer" && user.id !== delivery.userId) {
       throw new AppError("The user can only view their deliveries", 401);
     }
 
