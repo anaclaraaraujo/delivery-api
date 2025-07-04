@@ -3,9 +3,6 @@ import { app } from "@/app";
 import { prisma } from "@/infra/database/prisma";
 
 describe("CreateDeliveryLogController", () => {
-  let user_id: string;
-  let token: string;
-
   beforeEach(async () => {
     await prisma.deliveryLog.deleteMany();
     await prisma.delivery.deleteMany();

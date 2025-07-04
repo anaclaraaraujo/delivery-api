@@ -28,14 +28,12 @@ describe("UsersController", () => {
   });
 
   it("should throw an error if user with same email already exists", async () => {
-    // Cria o usuário com o email "ana@example.com"
     await request(app).post("/users").send({
       name: "Original User",
       email: "ana@example.com",
       password: "password123",
     });
 
-    // Tenta criar de novo com o mesmo e-mail
     const response = await request(app).post("/users").send({
       name: "Duplicate User",
       email: "ana@example.com",
