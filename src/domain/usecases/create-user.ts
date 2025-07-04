@@ -1,5 +1,5 @@
 import { AppError } from "@/shared/errors/AppError";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { UsersRepository } from "@/domain/repositories/users-repository";
 import { createUserSchema } from "@/infra/http/dtos/create-user.dto";
 
